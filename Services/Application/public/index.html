@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+  <script src="controller.js"></script>
+</head>
+<body ng-app="bookcatalog">
+  <div ng-controller="mainController"> 
+    &nbsp;&nbsp;<label><h1>Project Gutenberg Book Catalog</h1>&nbsp;</label>
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <input type="text" class="form-control" id="enterKeyword" placeholder="Enter keyword" ng-model="keyword">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2" ng-click="searchKeyword();reset()">search</button>&nbsp;
+        <button type="submit" class="btn btn-primary mb-2" ng-click="retrieveNotes()">retrieve notes</button>
+    </form>
+    <div style="padding: 10px; width: 50%; float:left" ng-show="rows.length && !hideVar">
+        <table class="table table-sm">
+        <thead>
+            <tr>
+            <th>BOOK_NAME</th>         
+            <th>AUTHOR_NAME</th>
+            <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rows">
+            <td>{{row.book_name}}</td>
+            <td>{{row.author_name}}</td> 
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div style="padding: 20px; width: 50%; float:left" ng-show="isInitialized && !rows.length && !hideVar">
+        <h5><bold>No books or authors with the keyword to display!</bold></h5>
+    </div>
+    <div style="padding: 10px; width: 40%; float:left" ng-show="rows.length && !hideVar">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Notes</label>
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10" ng-model="note"></textarea></br>
+            <button type="submit" class="btn btn-primary mb-2" ng-click="saveNotes();reset()">save</button>
+        </div>
+    </div>
+    <div style="padding: 10px; width: 50%; float:left" ng-show="rows.length && hideVar">
+        <table class="table table-sm">
+        <thead>
+            <tr>
+            <th>Keyword</th>        
+            <th>Notes</th>
+            <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rows">
+            <td>{{row.keyword}}</td>
+            <td>{{row.note}}</td> 
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    <div style="padding: 20px; width: 50%; float:left" ng-show="isInitialized && !rows.length && hideVar">
+        <h5><bold>No notes to display!</bold></h5>
+    </div>
+  </div> 
+</body>
+</html>
